@@ -1,0 +1,11 @@
+<%= form_for candidate do |f| %>
+  name:<%= f.text_field :name %>
+  age:<%= f.text_field :age %>
+  party:<%= f.text_field :party %>
+  politics:<%= f.text_area :politics %>
+
+  <%= f.submit %>
+<% end %>
+
+<!--partial file 局部檔案，原本是@candidate 讓這個檔案可以直接去抓目前的@candidate,但這樣 -->
+<!--不推薦，讓接partial file的檔案 傳參數給他會比較好@candidate→candidate  -->

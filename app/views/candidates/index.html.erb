@@ -1,0 +1,58 @@
+<h1>Candidate List</h1>
+
+<!-- <%= [1,2,3,4,5].sample %>  -->
+<!-- 隨機從1~5選出一個數字 -->
+
+<!-- <a href="candidates/new">add candidate</a>
+# <!-- <%= link_to "add candidate", "/candidates/new" %> -->
+<%= link_to "add candidate", new_candidate_path ,class: "btn btn-success" %>
+<!-- 1、2不好維護，route改，這邊要手動更新，3會自動連到route new_cadidate的路徑，且打錯會有錯誤訊息 -->
+<!-- "%= 是指會輸出在畫面上 ruby 語法是要用class: -->
+
+<ul>
+  <% @candidates.each do |candidate| %>
+
+<!--   <li><%= link_to candidate.name,candidate_path(candidate.id)%></li> -->
+  <li><%= link_to candidate.name, candidate %>
+  <%= link_to "edit", edit_candidate_path(candidate) %>
+<!-- link_to 顯示名稱，連結/ candidate_path(candidate.id) 簡化成candidate   -->
+  <%= link_to "delete" ,candidate, method: "delete", data: { confirm: 'delete?'} %>
+  </li>
+<!--UJS =Unobtrusive JavaScript    -->
+  <% end %>
+  
+</ul>
+
+<table class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <td></td>
+      <td>Name</td>
+      <td>Votes</td>
+      <td>Age</td>
+      <td>Politics</td>
+      <td></td>
+    </tr> 
+  </thead>
+  
+  <tbody>
+    <% @candidates.each do |candidate| %>
+    <tr>
+      <td><%= link_to "Vote!", vote_candidate_path(candidate), class: "btn btn-xs btn-danger", data: {confirm: 'Vote this one?'}, method: "post" %></td>
+<!--       <td><%= link_to candidate.name,candidate%></td> -->
+<!--       <td><%= link_to "#{candidate.name}(#{candidate.party})", candidate%></td> -->
+<!--       <td><%= link_to display_name(candidate), candidate%></td> --> <!-- helper -->
+      <td><%= link_to candidate.display_name%></td> <!-- model -->
+<!--#{}用字串的方式印出來，display_name 去helper 把一些邏輯判斷和重複的程式碼打在那裏，裡面的模組任何的頁面都會載入        -->
+<!--       <td><%= candidate.votes %></td> -->
+      <td><%= candidate.logs.size %></td>
+      <td><%= candidate.age %></td>
+      <td><%= candidate.politics %></td>
+      <td>
+        <%= link_to "edit", edit_candidate_path(candidate), class: "btn btn-success btn-xs"%>
+        <%= link_to "delete" ,candidate, method: "delete", data: { confirm: 'delete?'} , class: "btn btn-primary btn-xs"%>
+      </td>
+    </tr> 
+    <% end %>
+  </tbody>  
+</table>
